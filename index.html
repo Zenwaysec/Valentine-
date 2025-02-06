@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pookie Please</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        .yes-button {
+            font-size: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .no-button {
+            font-size: 16px;
+            padding: 8px 16px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+        .image-container {
+            margin-top: 20px;
+        }
+        .image-container img {
+            width: 200px;
+            height: auto;
+            display: none;
+            border-radius: 10px;
+        }
+        .love-animation {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: red;
+            clip-path: polygon(50% 0%, 100% 35%, 82% 100%, 50% 80%, 18% 100%, 0% 35%);
+            opacity: 0.7;
+            animation: floatUp 3s infinite;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+        .love-message {
+            font-size: 24px;
+            color: #e74c3c;
+            font-weight: bold;
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Will you be my Valentine?</h1>
+        <div class="image-container">
+            <img id="image-no" src="https://upload.wikimedia.org/wikipedia/en/6/6e/Pocoyo_crying.png" alt="Sad Pocoyo">
+            <img id="image-yes" src="https://upload.wikimedia.org/wikipedia/en/1/12/Pocoyo.png" alt="Happy Pocoyo">
+        </div>
+        <button class="yes-button" onclick="handleYesClick()">Yes</button>
+        <button class="no-button" onclick="handleNoClick()">No</button>
+        <p class="sad-message" style="color: red; display: none;">Sedihhnyaaaa...</p>
+        <p id="love-message" class="love-message">Yayyyy! 🥰 Makasihhhh</p>
+    </div>
+
+    <script>
+        let messageIndex = 0;
+        const messages = [
+            "Beneran Kakkk? 🥺",
+            "Dipikir - pikir lagi dehh... 😢",
+            "Aduh jangann tidak dongg... 😭",
+            "Kit heart aku Kakkk... 💔",
+            "Nangiss aku Kakkk..."
+        ];
+
+        function handleNoClick() {
+            const noButton = document.querySelector(".no-button");
+            const yesButton = document.querySelector(".yes-button");
+            const sadMessage = document.querySelector(".sad-message");
+            const imageNo = document.getElementById("image-no");
+            const imageYes = document.getElementById("image-yes");
+
+            noButton.textContent = messages[messageIndex];
+            messageIndex = (messageIndex + 1) % messages.length;
+
+            let currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = `${currentSize * 1.5}px`;
+
+            imageNo.style.display = "block";
+            imageYes.style.display = "none";
+
+            if (messageIndex === messages.length - 1) {
+                sadMessage.style.display = "block";
+            }
+        }
+
+        function handleYesClick() {
+            document.getElementById("image-no").style.display = "none";
+            document.getElementById("image-yes").style.display = "block";
+            document.getElementById("love-message").style.display = "block";
+            createLoveEffect();
+        }
+
+        function createLoveEffect() {
+            for (let i = 0; i < 20; i++) {
+                let love = document.createElement("div");
+                love.classList.add("love-animation");
+                love.style.left = Math.random() * 100 + "vw";
+                love.style.animationDuration = (Math.random() * 2 + 2) + "s";
+                document.body.appendChild(love);
+                setTimeout(() => {
+                    love.remove();
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
